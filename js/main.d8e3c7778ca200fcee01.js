@@ -74648,6 +74648,7 @@ function makeStyles(stylesOrCreator, options = {}) {
 ;// CONCATENATED MODULE: ./src/js/styles/chatpageStyles.tsx
 
 
+
 const useStyles = () => {
   const styles = makeStyles({
     table: {
@@ -74664,8 +74665,9 @@ const useStyles = () => {
       borderRight: "1px solid #e0e0e0"
     },
     messageArea: {
-      height: "73vh",
-      overflowY: "auto"
+      overflowY: "auto",
+      maxHeight: INNER_HEIGHT_WINDOW - 64 - 53 + "px",
+      height: INNER_HEIGHT_WINDOW - 64 - 53 + "px"
     }
   });
   return styles();
@@ -76196,7 +76198,8 @@ const Chat = () => {
     component: Paper_Paper,
     className: classes.chatSection,
     sx: {
-      minHeight: INNER_HEIGHT_WINDOW + "px"
+      minHeight: INNER_HEIGHT_WINDOW + "px",
+      maxHeight: INNER_HEIGHT_WINDOW + "px"
     }
   }, /*#__PURE__*/react.createElement(Grid_Grid, {
     item: true,
