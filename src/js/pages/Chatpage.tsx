@@ -178,6 +178,7 @@ const Chat = () => {
       className={classes.chatSection}
       sx={{
         minHeight: INNER_HEIGHT_WINDOW + "px",
+        maxHeight: INNER_HEIGHT_WINDOW + "px",
       }}
     >
       <Grid item xs={3} className={`${classes.borderRight500} user-menu`}>

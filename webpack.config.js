@@ -15,7 +15,6 @@ module.exports = {
   entry: {
     main: ["@babel/polyfill", "./src/js/main.js"], // polyfyfill дополняет фичи ES
     // any: 'any.js' возможность добавления чанка(сборник скриптов)
-   
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension
@@ -24,7 +23,7 @@ module.exports = {
   output: {
     filename: "js/[name].[hash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: isDev ? "/" : "/",
+    publicPath: isDev ? "/" : "./",
   },
 
   devServer: {
@@ -46,13 +45,12 @@ module.exports = {
     new Dotenv(),
     new HtmlWebpackPlugin({
       // добавляем в компиляцию html
-      filename: 'index.html',
+      filename: "index.html",
       template: path.resolve(__dirname, "./src/index.html"), // указываем файл html, который будет базовым
       minify: {
         collapseWhitespace: isProd,
       },
       // chunks:['tournament']   возможность подключать к файлу html отдельные чанки
-
     }),
 
     new CleanWebpackPlugin(), // очищаем корневую папку dist от неактуальных файлов
@@ -149,7 +147,7 @@ module.exports = {
       },
       {
         test: /\.mp3$/,
-        loader: 'file-loader'
+        loader: "file-loader",
       },
     ],
   },

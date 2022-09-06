@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
+import { INNER_HEIGHT_WINDOW } from "../utils/constats";
 
 const useStyles = () => {
   const styles = makeStyles({
@@ -17,8 +18,9 @@ const useStyles = () => {
       borderRight: "1px solid #e0e0e0",
     },
     messageArea: {
-      height: "73vh",
       overflowY: "auto",
+      maxHeight: INNER_HEIGHT_WINDOW - 64 - 53 + "px",
+      height: INNER_HEIGHT_WINDOW - 64 - 53 + "px",
     },
   });
   return styles();
