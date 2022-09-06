@@ -18,7 +18,11 @@ const ActiveDialogProfile = (props) => {
     <>
       <Grid
         container
-        sx={{ textAlign: "center", display: "flex", justifyContent: "center" }}
+        sx={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
         <ListItem
           key={activeProfile.displayName}

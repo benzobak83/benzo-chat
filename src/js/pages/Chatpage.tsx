@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -39,6 +45,7 @@ import "firebase/compat/firestore";
 import { collection, setDoc, doc, onSnapshot } from "firebase/firestore";
 import { LoaderRadius } from "../components/LoaderRadius";
 import { AccordionItem } from "../components/AccordionItem";
+import { Button } from "@mui/material";
 
 const Chat = () => {
   const classes = useStyles();
@@ -54,6 +61,8 @@ const Chat = () => {
   const [isChatLoading, setIsChatLoading] = useState(true);
   const [searchName, setSearchName] = useState("");
   const [unreadedMsg, setUnreadedMsg] = useState({});
+  const [isEditNow, setIsEditNow] = useState(false);
+  const [startActionEdit, setStartActionEdit] = useState(false);
 
   const onlineCountCollectionRef = collection(db, "online-count");
   const [onlineCount] = useCollectionData(onlineCountCollectionRef);
@@ -61,6 +70,8 @@ const Chat = () => {
   const [usersCount] = useCollectionData(usersCountCollectionRef);
   const userDialogsCollectionRef = collection(db, user.uid);
   const [userDialogsCount] = useCollection(userDialogsCollectionRef);
+
+  const textArea = useRef(null);
 
   const DB_ONLINE = doc(db, "online-count", user.uid);
   const DB_USER = doc(db, user.uid, companionUid);
@@ -72,7 +83,7 @@ const Chat = () => {
     addOnline(DB_ONLINE, user);
     sendMsgAction(DB_USER, DB_COMPANION, user, companionUid, msgText, firstMsg);
     setMsgText("");
-  }
+  };
 
   // в самолете делал без дебага
   useEffect(() => {
@@ -154,6 +165,10 @@ const Chat = () => {
     checkingStatusMsg(DB_COMPANION, messages, user);
   }, [messages]);
 
+  useEffect(() => {
+    if (isEditNow) textArea.current.children[1].children[0].focus();
+  }, [isEditNow]);
+
   if (isLoading) return <Loader />;
 
   return (
@@ -163,7 +178,6 @@ const Chat = () => {
       className={classes.chatSection}
       sx={{
         minHeight: INNER_HEIGHT_WINDOW + "px",
-        maxHeight: INNER_HEIGHT_WINDOW,
       }}
     >
       <Grid item xs={3} className={`${classes.borderRight500} user-menu`}>
@@ -243,33 +257,60 @@ const Chat = () => {
                 usersCount={usersCount}
                 db_const={{ DB_USER: DB_USER, DB_COMPANION: DB_COMPANION }}
                 setIsChatLoading={setIsChatLoading}
+                setIsEditNow={setIsEditNow}
+                textArea={textArea}
+                setMsgText={setMsgText}
+                startActionEdit={startActionEdit}
+                setStartActionEdit={setStartActionEdit}
               />
             </>
           )}
         </List>
         <Divider />
         <Grid container style={{ padding: "20px", flexWrap: "nowrap" }}>
-          <Grid item xs={10}>
+          <Grid item xs={isEditNow ? 12 : 10}>
             <TextField
               id="outlined-basic-email"
+              ref={textArea}
               label="Type Something"
               fullWidth
               value={msgText}
               onChange={(e) => setMsgText(e.target.value)}
             />
           </Grid>
-          <Grid item xs={1} sx={{ ml: "15px", mr: "15px" }}>
-            <Fab
-              color="primary"
-              aria-label="add"
-              onClick={() => {
-                sendMsg();
-              }}
-            >
-              <SendIcon />
-            </Fab>
-          </Grid>
+          {!isEditNow ? (
+            <Grid item xs={1} sx={{ ml: "15px", mr: "15px" }}>
+              <Fab
+                color="primary"
+                aria-label="add"
+                onClick={() => {
+                  sendMsg();
+                }}
+              >
+                <SendIcon />
+              </Fab>
+            </Grid>
+          ) : null}
         </Grid>
+        {isEditNow ? (
+          <Grid
+            container
+            sx={{
+              flexDirection: "row",
+              marginTop: "-5px",
+              marginRight: "5px",
+              justifyContent: "space-around",
+            }}
+            xs="12"
+          >
+            <Button variant="text" onClick={() => setStartActionEdit(true)}>
+              Сохранить
+            </Button>
+            <Button variant="text" onClick={() => setIsEditNow(false)}>
+              Отмена
+            </Button>
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );

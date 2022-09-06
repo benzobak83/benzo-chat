@@ -86,6 +86,15 @@ const deleteMsgAllAction = (db, dbReverce, messages) => {
   });
 };
 
+const editMsgAction = async (db, dbReverce, messagesHistory, message, editMsg) => {
+  await updateDoc(db, {
+    [message]:{...messagesHistory[message], text:editMsg}
+  })
+  await updateDoc(dbReverce, {
+    [message]:{...messagesHistory[message], text:editMsg}
+  })
+}
+
 const checkibgUnreadedMsg = async (
   db,
   userUid,
@@ -124,4 +133,5 @@ export {
   deleteMsgAction,
   deleteMsgAllAction,
   checkibgUnreadedMsg,
+  editMsgAction
 };

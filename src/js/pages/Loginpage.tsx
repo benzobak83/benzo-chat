@@ -36,8 +36,12 @@ function Login() {
   };
 
   return (
-    <ThemeProvider theme={theme} sx={{height:`${INNER_HEIGHT_WINDOW}px`}}>
-      <Container component="main" maxWidth="xs" sx={{height:`${INNER_HEIGHT_WINDOW - 63}px`}}>
+    <ThemeProvider theme={theme} sx={{ height: `${INNER_HEIGHT_WINDOW}px` }}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ height: `${INNER_HEIGHT_WINDOW - 63}px` }}
+      >
         <CssBaseline />
         <Box
           sx={{

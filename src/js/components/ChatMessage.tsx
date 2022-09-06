@@ -15,9 +15,9 @@ const ChatMessage = React.memo((props) => {
   const { text, userUid, createAt, dateUser, unreaded = false } = message;
   
   
-console.log(msgIsSelected)
+console.log(text)
 
-console.log()
+
   const stylesUser = {
     justifyContent: "flex-end",
   };

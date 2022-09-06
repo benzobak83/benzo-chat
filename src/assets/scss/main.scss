@@ -1,44 +1,44 @@
-
+body {
+  overflow-x: hidden;
+}
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 .user-menu {
-    
-    transition: all 0.5s;
-    left: 0px;
-    z-index: 100;
-    
+  transition: all 0.5s;
+  left: 0px;
+  z-index: 100;
 }
 
 .chat-window-wrapper {
-    position: relative;
-    z-index: 1;
-   
-    
+  position: relative;
+  z-index: 1;
 }
-@media screen and (max-width: 900px){
-    .user-menu {
-        left: -500px !important;
-        position: absolute;
-        height: 95%;
-        z-index: 999;
-    }
-    .user-menu.active {
-        left: 0px !important;
-        max-width: 500px !important;
-        min-width: 80%;
-        background-color: white;
-        
-    }
-    .chat-window-wrapper {
-     min-width: 100%;
-    }
+@media screen and (max-width: 900px) {
+  .user-menu {
+    left: -500px !important;
+    position: absolute;
+    height: 95%;
+    z-index: 999;
+  }
+  .user-menu.active {
+    left: 0px !important;
+    max-width: 500px !important;
+    min-width: 80%;
+    background-color: white;
+  }
+  .chat-window-wrapper {
+    min-width: 100%;
+  }
+  .active-dialog-profile {
+    width: 100% !important;
+  }
 }
-
 
 .user-online {
-    &.active {
-        background-color: #f5f5f5;
-        box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
-    }
+  &.active {
+    background-color: #f5f5f5;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+      0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  }
 }
