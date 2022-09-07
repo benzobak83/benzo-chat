@@ -70370,7 +70370,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     }
   }, /*#__PURE__*/react.createElement(ListItemIcon_ListItemIcon, null, /*#__PURE__*/react.createElement(Avatar_Avatar, {
     alt: user.displayName,
-    src: userProfile.uid !== user.uid ? user.photoURL : `benzo-chat${saved_namespaceObject}`
+    src: userProfile.uid !== user.uid ? user.photoURL : `benzo-chat${saved_namespaceObject.replace(0, "")}`
   })), /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
     primary: userProfile.uid !== user.uid ? user.displayName : "Заметки",
     className: "uset-chat__hidden"
