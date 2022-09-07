@@ -70232,11 +70232,13 @@ const ChatList = /*#__PURE__*/react.memo(props => {
   const deleteMsg = () => {
     deleteMsgAction(db_const.DB_USER, selectedMessages);
     handleCancelSelected();
+    setIsDeleteAction(false);
   };
 
   const deleteMsgAll = () => {
     deleteMsgAllAction(db_const.DB_USER, db_const.DB_COMPANION, selectedMessages);
     handleCancelSelected();
+    setIsDeleteAction(false);
   }; // const editMsg = () => editMsgAction(db_const.DB_USER, db_const.DB_COMPANION, messagesHistory, selectedMessages, 'checktext')
 
 
@@ -70373,7 +70375,11 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     className: "uset-chat__hidden"
   }, userProfile !== user.uid ? user.displayName : "Заметки", " "), /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
     secondary: userProfile.uid !== user.uid ? "online" : "",
-    className: "uset-chat__hidden"
+    className: "uset-chat__hidden",
+    sx: {
+      position: "absolute",
+      right: "10px"
+    }
   }), unreadedMsg[user.uid] > 0 ? /*#__PURE__*/react.createElement(Typography_Typography, {
     sx: {
       position: "absolute",
@@ -76215,7 +76221,7 @@ const Chat = props => {
   (0,react.useEffect)(() => {
     openDialog(user.uid);
     addOnline(DB_ONLINE, user);
-    let offline = checkerActivity(DB_ONLINE, 5000000);
+    let offline = checkerActivity(DB_ONLINE, 300);
     EVENT_ACTIVITY.forEach(item => {
       window.addEventListener(item, () => {
         clearTimeout(offline);
@@ -76266,7 +76272,8 @@ const Chat = props => {
     item: true,
     xs: 12,
     style: {
-      padding: "10px"
+      padding: "10px",
+      minWidth: "300px"
     }
   }, /*#__PURE__*/react.createElement(TextField_TextField, {
     id: "outlined-basic-email",
@@ -76275,7 +76282,11 @@ const Chat = props => {
     fullWidth: true,
     value: searchName,
     onChange: e => setSearchName(e.target.value)
-  })), /*#__PURE__*/react.createElement(List_List, null, /*#__PURE__*/react.createElement(UsersChat, {
+  })), /*#__PURE__*/react.createElement(List_List, {
+    sx: {
+      minWidth: "300px"
+    }
+  }, /*#__PURE__*/react.createElement(UsersChat, {
     onlineCount: [user],
     openDialog: openDialog,
     userProfile: user,
