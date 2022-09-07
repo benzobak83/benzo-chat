@@ -70350,7 +70350,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
   const [isNotification, setIsNotification] = (0,react.useState)(true);
   const onlineCountFiltered = filterOnlineCount(onlineCount, searchName, userProfile, filter);
   const users_uid = Object.keys(unreadedMsg);
-  console.log(saved_namespaceObject.replace(0));
+  console.log(saved_namespaceObject.replace(0, 1));
   return /*#__PURE__*/react.createElement("div", {
     style: {
       maxHeight: "400px",
@@ -70370,7 +70370,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     }
   }, /*#__PURE__*/react.createElement(ListItemIcon_ListItemIcon, null, /*#__PURE__*/react.createElement(Avatar_Avatar, {
     alt: user.displayName,
-    src: userProfile.uid !== user.uid ? user.photoURL : `benzo-chat${saved_namespaceObject.replace(0)}`
+    src: userProfile.uid !== user.uid ? user.photoURL : `benzo-chat${saved_namespaceObject.replace(0, 1)}`
   })), /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
     primary: userProfile.uid !== user.uid ? user.displayName : "Заметки",
     className: "uset-chat__hidden"
@@ -76274,7 +76274,7 @@ const Chat = props => {
     xs: 12,
     style: {
       padding: "10px",
-      minWidth: "300px"
+      minWidth: "100px"
     }
   }, /*#__PURE__*/react.createElement(TextField_TextField, {
     id: "outlined-basic-email",
@@ -76285,7 +76285,7 @@ const Chat = props => {
     onChange: e => setSearchName(e.target.value)
   })), /*#__PURE__*/react.createElement(List_List, {
     sx: {
-      minWidth: "300px"
+      minWidth: "100px"
     }
   }, /*#__PURE__*/react.createElement(UsersChat, {
     onlineCount: [user],
