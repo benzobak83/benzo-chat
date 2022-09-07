@@ -76226,7 +76226,7 @@ const Chat = props => {
     EVENT_ACTIVITY.forEach(item => {
       window.addEventListener(item, () => {
         clearTimeout(offline);
-        offline = checkerActivity(DB_ONLINE, 5000000);
+        offline = checkerActivity(DB_ONLINE, 300000);
       });
     });
   }, []);
