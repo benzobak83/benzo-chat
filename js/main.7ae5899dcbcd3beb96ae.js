@@ -70350,6 +70350,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
   const [isNotification, setIsNotification] = (0,react.useState)(true);
   const onlineCountFiltered = filterOnlineCount(onlineCount, searchName, userProfile, filter);
   const users_uid = Object.keys(unreadedMsg);
+  console.log(saved_namespaceObject);
   return /*#__PURE__*/react.createElement("div", {
     style: {
       maxHeight: "400px",
@@ -70369,7 +70370,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     }
   }, /*#__PURE__*/react.createElement(ListItemIcon_ListItemIcon, null, /*#__PURE__*/react.createElement(Avatar_Avatar, {
     alt: user.displayName,
-    src: userProfile.uid !== user.uid ? user.photoURL : saved_namespaceObject
+    src: userProfile.uid !== user.uid ? user.photoURL : `benzo-chat${saved_namespaceObject}`
   })), /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
     primary: userProfile.uid !== user.uid ? user.displayName : "Заметки",
     className: "uset-chat__hidden"
