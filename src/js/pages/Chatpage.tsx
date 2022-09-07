@@ -142,7 +142,7 @@ const Chat = (props) => {
     openDialog(user.uid);
     addOnline(DB_ONLINE, user);
 
-    let offline = checkerActivity(DB_ONLINE, 300);
+    let offline = checkerActivity(DB_ONLINE, 300000);
 
     EVENT_ACTIVITY.forEach((item) => {
       window.addEventListener(item, () => {

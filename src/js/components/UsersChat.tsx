@@ -66,9 +66,9 @@ const UsersChat = React.memo((props) => {
             </ListItemText>
 
             <ListItemText
-              secondary={userProfile.uid !== user.uid ? "online" : ""}
+              secondary={userProfile.uid !== user.uid ? "" : ""}
               className={"uset-chat__hidden"}
-              sx={{ position: "absolute", right: "10px" }}
+              sx={{ position: "absolute", right: "15px" }}
             ></ListItemText>
             {unreadedMsg[user.uid] > 0 ? (
               <Typography
