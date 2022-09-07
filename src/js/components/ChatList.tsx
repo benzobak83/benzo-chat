@@ -54,6 +54,7 @@ const ChatList = React.memo((props) => {
   const deleteMsg = () => {
     deleteMsgAction(db_const.DB_USER, selectedMessages);
     handleCancelSelected();
+    setIsDeleteAction(false);
   };
   const deleteMsgAll = () => {
     deleteMsgAllAction(
@@ -62,6 +63,7 @@ const ChatList = React.memo((props) => {
       selectedMessages
     );
     handleCancelSelected();
+    setIsDeleteAction(false);
   };
   // const editMsg = () => editMsgAction(db_const.DB_USER, db_const.DB_COMPANION, messagesHistory, selectedMessages, 'checktext')
   const handleClickEditMsg = () => {

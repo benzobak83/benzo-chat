@@ -142,7 +142,7 @@ const Chat = (props) => {
     openDialog(user.uid);
     addOnline(DB_ONLINE, user);
 
-    let offline = checkerActivity(DB_ONLINE, 5000000);
+    let offline = checkerActivity(DB_ONLINE, 300);
 
     EVENT_ACTIVITY.forEach((item) => {
       window.addEventListener(item, () => {
@@ -202,7 +202,7 @@ const Chat = (props) => {
           </ListItem>
         </List>
 
-        <Grid item xs={12} style={{ padding: "10px" }}>
+        <Grid item xs={12} style={{ padding: "10px", minWidth: "300px" }}>
           <TextField
             id="outlined-basic-email"
             label="Search"
@@ -213,7 +213,7 @@ const Chat = (props) => {
           />
         </Grid>
 
-        <List>
+        <List sx={{ minWidth: "300px" }}>
           <UsersChat
             onlineCount={[user]}
             openDialog={openDialog}
