@@ -70374,11 +70374,11 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     primary: userProfile.uid !== user.uid ? user.displayName : "Заметки",
     className: "uset-chat__hidden"
   }, userProfile !== user.uid ? user.displayName : "Заметки", " "), /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
-    secondary: userProfile.uid !== user.uid ? "online" : "",
+    secondary: userProfile.uid !== user.uid ? "" : "",
     className: "uset-chat__hidden",
     sx: {
       position: "absolute",
-      right: "10px"
+      right: "15px"
     }
   }), unreadedMsg[user.uid] > 0 ? /*#__PURE__*/react.createElement(Typography_Typography, {
     sx: {
@@ -76221,7 +76221,7 @@ const Chat = props => {
   (0,react.useEffect)(() => {
     openDialog(user.uid);
     addOnline(DB_ONLINE, user);
-    let offline = checkerActivity(DB_ONLINE, 300);
+    let offline = checkerActivity(DB_ONLINE, 300000);
     EVENT_ACTIVITY.forEach(item => {
       window.addEventListener(item, () => {
         clearTimeout(offline);
