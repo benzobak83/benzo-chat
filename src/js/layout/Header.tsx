@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,16 +15,19 @@ import AdbIcon from "@mui/icons-material/Adb";
 
 import { Context } from "../main.js";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { burgerContext } from "../utils/burgerContext";
 
-const Header = React.memo(() => {
+const Header = React.memo((props) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const { burgerIsOpen, setBurgerIsOpen } = useContext(burgerContext);
 
   const { auth } = useContext(Context);
+
   const [user] = useAuthState(auth);
 
   const settings = [user ? "Logout" : "Login"];
@@ -45,6 +48,8 @@ const Header = React.memo(() => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleBurgerIsOpen = () => setBurgerIsOpen((prev) => !prev);
 
   return (
     <AppBar position="static" sx={{ minHeight: "64px" }}>
@@ -75,7 +80,7 @@ const Header = React.memo(() => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={handleBurgerIsOpen}
               color="inherit"
             >
               <MenuIcon />

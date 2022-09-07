@@ -46,8 +46,9 @@ import { collection, setDoc, doc, onSnapshot } from "firebase/firestore";
 import { LoaderRadius } from "../components/LoaderRadius";
 import { AccordionItem } from "../components/AccordionItem";
 import { Button } from "@mui/material";
+import { burgerContext } from "../utils/burgerContext";
 
-const Chat = () => {
+const Chat = (props) => {
   const classes = useStyles();
 
   const { auth, db } = useContext(Context);
@@ -77,6 +78,7 @@ const Chat = () => {
   const DB_USER = doc(db, user.uid, companionUid);
   const DB_COMPANION = doc(db, companionUid, user.uid);
 
+  const { burgerIsOpen } = useContext(burgerContext);
   //!!!!!Возможно useCallback поломает
   const sendMsg = (firstMsg = null) => {
     console.log("sendMsg");
@@ -179,9 +181,18 @@ const Chat = () => {
       sx={{
         minHeight: INNER_HEIGHT_WINDOW + "px",
         maxHeight: INNER_HEIGHT_WINDOW + "px",
+        width: "100%",
       }}
     >
-      <Grid item xs={3} className={`${classes.borderRight500} user-menu`}>
+      <Grid
+        item
+        xs={3}
+        className={
+          (`${classes.borderRight500}`,
+          burgerIsOpen ? "user-menu active" : "user-menu")
+        }
+        sx={{ maxHeight: INNER_HEIGHT_WINDOW + "px" }}
+      >
         <List>
           <ListItem button key="RemySharp">
             <ListItemIcon>
@@ -269,7 +280,7 @@ const Chat = () => {
         </List>
         <Divider />
         <Grid container style={{ padding: "20px", flexWrap: "nowrap" }}>
-          <Grid item xs={isEditNow ? 12 : 10}>
+          <Grid item xs={isEditNow ? 10 : 10}>
             <TextField
               id="outlined-basic-email"
               ref={textArea}
@@ -291,27 +302,40 @@ const Chat = () => {
                 <SendIcon />
               </Fab>
             </Grid>
-          ) : null}
+          ) : (
+            <Grid
+              item
+              xs={2}
+              sx={{
+                marginTop: "-5px",
+                marginRight: "5px",
+                marginLeft: "5px",
+                alignItems: "center",
+
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Button
+                variant="text"
+                className="edit__buttons"
+                onClick={() => setStartActionEdit(true)}
+              >
+                Сохранить
+              </Button>
+              <Button
+                variant="text"
+                className="edit__buttons"
+                onClick={() => {
+                  setIsEditNow(false);
+                  setMsgText("");
+                }}
+              >
+                Отмена
+              </Button>
+            </Grid>
+          )}
         </Grid>
-        {isEditNow ? (
-          <Grid
-            container
-            sx={{
-              flexDirection: "row",
-              marginTop: "-5px",
-              marginRight: "5px",
-              justifyContent: "space-around",
-            }}
-            xs="12"
-          >
-            <Button variant="text" onClick={() => setStartActionEdit(true)}>
-              Сохранить
-            </Button>
-            <Button variant="text" onClick={() => setIsEditNow(false)}>
-              Отмена
-            </Button>
-          </Grid>
-        ) : null}
       </Grid>
     </Grid>
   );

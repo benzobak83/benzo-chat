@@ -84,6 +84,9 @@ const ChatList = React.memo((props) => {
         text.current
       );
       setStartActionEdit(false);
+      setIsEditNow(false);
+      setSelectedMessages([]);
+      setMsgText("");
     }
   }, [startActionEdit]);
 
