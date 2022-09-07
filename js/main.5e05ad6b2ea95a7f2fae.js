@@ -14668,7 +14668,7 @@ module.exports = __webpack_require__(5645);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body{overflow-x:hidden}a{text-decoration:none}.user-menu{transition:all .5s;left:0px;z-index:100}.chat-window-wrapper{position:relative;z-index:1}@media screen and (max-width: 900px){.user-menu{left:-500px !important;position:absolute;height:95%;z-index:999}.user-menu.active{left:0px !important;max-width:500px !important;min-width:80%;background-color:#fff}.chat-window-wrapper{min-width:100%}.active-dialog-profile{width:100% !important}}.user-online.active{background-color:#f5f5f5;box-shadow:0px 2px 4px -1px rgba(0,0,0,.2),0px 4px 5px 0px rgba(0,0,0,.14),0px 1px 10px 0px rgba(0,0,0,.12)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body{overflow-x:hidden}a{text-decoration:none}.user-menu{transition:all .5s;left:0px;z-index:100}.chat-window-wrapper{position:relative;z-index:1}@media screen and (max-width: 900px){.user-menu{left:-500px !important;position:absolute;height:95%;z-index:999}.user-menu.active{left:0px !important;max-width:500px !important;min-width:80%;background-color:#fff}.chat-window-wrapper{min-width:100%}.active-dialog-profile{width:100% !important}.edit__buttons{font-size:11px !important;margin-left:10px !important;margin-right:2px}}.user-online.active{background-color:#f5f5f5;box-shadow:0px 2px 4px -1px rgba(0,0,0,.2),0px 4px 5px 0px rgba(0,0,0,.14),0px 1px 10px 0px rgba(0,0,0,.12)}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41752,6 +41752,10 @@ var useUpdateProfile = function (auth) {
 
 
 
+;// CONCATENATED MODULE: ./src/js/utils/burgerContext.tsx
+
+const burgerContext = /*#__PURE__*/(0,react.createContext)();
+
 ;// CONCATENATED MODULE: ./src/js/layout/Header.tsx
 
 
@@ -41768,9 +41772,14 @@ var useUpdateProfile = function (auth) {
 
 
 
-const Header = /*#__PURE__*/react.memo(() => {
+
+const Header = /*#__PURE__*/react.memo(props => {
   const [anchorElNav, setAnchorElNav] = react.useState(null);
   const [anchorElUser, setAnchorElUser] = react.useState(null);
+  const {
+    burgerIsOpen,
+    setBurgerIsOpen
+  } = (0,react.useContext)(burgerContext);
   const {
     auth
   } = (0,react.useContext)(Context);
@@ -41794,6 +41803,8 @@ const Header = /*#__PURE__*/react.memo(() => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleBurgerIsOpen = () => setBurgerIsOpen(prev => !prev);
 
   return /*#__PURE__*/react.createElement(AppBar_AppBar, {
     position: "static",
@@ -41842,7 +41853,7 @@ const Header = /*#__PURE__*/react.memo(() => {
     "aria-label": "account of current user",
     "aria-controls": "menu-appbar",
     "aria-haspopup": "true",
-    onClick: handleOpenNavMenu,
+    onClick: handleBurgerIsOpen,
     color: "inherit"
   }, /*#__PURE__*/react.createElement(icons_material_Menu/* default */.Z, null)), /*#__PURE__*/react.createElement(Menu_Menu, {
     id: "menu-appbar",
@@ -41990,8 +42001,15 @@ function Footer() {
 
 
 
+
 function Layout() {
-  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Header, null), /*#__PURE__*/react.createElement(Outlet, null), /*#__PURE__*/react.createElement(layout_Footer, null));
+  const [burgerIsOpen, setBurgerIsOpen] = (0,react.useState)(false);
+  return /*#__PURE__*/react.createElement(burgerContext.Provider, {
+    value: {
+      burgerIsOpen,
+      setBurgerIsOpen
+    }
+  }, /*#__PURE__*/react.createElement(Header, null), /*#__PURE__*/react.createElement(Outlet, null), /*#__PURE__*/react.createElement(layout_Footer, null));
 }
 
 
@@ -70103,7 +70121,8 @@ const ActionDelete_style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  maxWidth: 400,
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -70235,6 +70254,9 @@ const ChatList = /*#__PURE__*/react.memo(props => {
       console.log(text.current);
       editMsgAction(db_const.DB_USER, db_const.DB_COMPANION, messagesHistory, selectedMessages, text.current);
       setStartActionEdit(false);
+      setIsEditNow(false);
+      setSelectedMessages([]);
+      setMsgText("");
     }
   }, [startActionEdit]);
   (0,react.useEffect)(() => {
@@ -70310,7 +70332,11 @@ const ChatList = /*#__PURE__*/react.memo(props => {
 
 
 
+
 const UsersChat = /*#__PURE__*/react.memo(props => {
+  const {
+    setBurgerIsOpen
+  } = (0,react.useContext)(burgerContext);
   const {
     onlineCount,
     openDialog,
@@ -70327,7 +70353,7 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
       maxHeight: "400px",
       overflowY: "auto"
     }
-  }, onlineCountFiltered.map(user => /*#__PURE__*/react.createElement(ListItem_ListItem, {
+  }, onlineCountFiltered.length ? onlineCountFiltered.map(user => /*#__PURE__*/react.createElement(ListItem_ListItem, {
     button: true,
     sx: {
       borderBottom: "1px solid #f5f5f5"
@@ -70335,7 +70361,10 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
     key: user.displayName,
     "data-uid": user.uid,
     className: userProfile.uid !== user.uid ? "user-online" : "user-online active",
-    onClick: e => getUid(e, openDialog)
+    onClick: e => {
+      getUid(e, openDialog);
+      setBurgerIsOpen(false);
+    }
   }, /*#__PURE__*/react.createElement(ListItemIcon_ListItemIcon, null, /*#__PURE__*/react.createElement(Avatar_Avatar, {
     alt: user.displayName,
     src: userProfile.uid !== user.uid ? user.photoURL : saved_namespaceObject
@@ -70358,7 +70387,19 @@ const UsersChat = /*#__PURE__*/react.memo(props => {
       fontSize: "12px"
     },
     className: "uset-chat__hidden"
-  }, unreadedMsg[user.uid]) : null)));
+  }, unreadedMsg[user.uid]) : null)) : /*#__PURE__*/react.createElement(ListItem_ListItem, {
+    button: true,
+    sx: {
+      borderBottom: "1px solid #f5f5f5"
+    },
+    xs: 12
+  }, /*#__PURE__*/react.createElement(ListItemText_ListItemText, {
+    primary: "Cписок пуст",
+    className: "uset-chat__hidden",
+    sx: {
+      width: "50vw"
+    }
+  })));
 });
 
 ;// CONCATENATED MODULE: ./node_modules/is-in-browser/dist/module.js
@@ -76086,7 +76127,8 @@ function AccordionItem({
 
 
 
-const Chat = () => {
+
+const Chat = props => {
   const classes = useStyles();
   const {
     auth,
@@ -76111,7 +76153,10 @@ const Chat = () => {
   const textArea = (0,react.useRef)(null);
   const DB_ONLINE = index_esm2017_xa(db, "online-count", user.uid);
   const DB_USER = index_esm2017_xa(db, user.uid, companionUid);
-  const DB_COMPANION = index_esm2017_xa(db, companionUid, user.uid); //!!!!!Возможно useCallback поломает
+  const DB_COMPANION = index_esm2017_xa(db, companionUid, user.uid);
+  const {
+    burgerIsOpen
+  } = (0,react.useContext)(burgerContext); //!!!!!Возможно useCallback поломает
 
   const sendMsg = (firstMsg = null) => {
     console.log("sendMsg");
@@ -76199,12 +76244,16 @@ const Chat = () => {
     className: classes.chatSection,
     sx: {
       minHeight: INNER_HEIGHT_WINDOW + "px",
-      maxHeight: INNER_HEIGHT_WINDOW + "px"
+      maxHeight: INNER_HEIGHT_WINDOW + "px",
+      width: "100%"
     }
   }, /*#__PURE__*/react.createElement(Grid_Grid, {
     item: true,
     xs: 3,
-    className: `${classes.borderRight500} user-menu`
+    className: (`${classes.borderRight500}`, burgerIsOpen ? "user-menu active" : "user-menu"),
+    sx: {
+      maxHeight: INNER_HEIGHT_WINDOW + "px"
+    }
   }, /*#__PURE__*/react.createElement(List_List, null, /*#__PURE__*/react.createElement(ListItem_ListItem, {
     button: true,
     key: "RemySharp"
@@ -76288,7 +76337,7 @@ const Chat = () => {
     }
   }, /*#__PURE__*/react.createElement(Grid_Grid, {
     item: true,
-    xs: isEditNow ? 12 : 10
+    xs: isEditNow ? 10 : 10
   }, /*#__PURE__*/react.createElement(TextField_TextField, {
     id: "outlined-basic-email",
     ref: textArea,
@@ -76309,22 +76358,29 @@ const Chat = () => {
     onClick: () => {
       sendMsg();
     }
-  }, /*#__PURE__*/react.createElement(Send/* default */.Z, null))) : null), isEditNow ? /*#__PURE__*/react.createElement(Grid_Grid, {
-    container: true,
+  }, /*#__PURE__*/react.createElement(Send/* default */.Z, null))) : /*#__PURE__*/react.createElement(Grid_Grid, {
+    item: true,
+    xs: 2,
     sx: {
-      flexDirection: "row",
       marginTop: "-5px",
       marginRight: "5px",
-      justifyContent: "space-around"
-    },
-    xs: "12"
+      marginLeft: "5px",
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column"
+    }
   }, /*#__PURE__*/react.createElement(Button_Button, {
     variant: "text",
+    className: "edit__buttons",
     onClick: () => setStartActionEdit(true)
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"), /*#__PURE__*/react.createElement(Button_Button, {
     variant: "text",
-    onClick: () => setIsEditNow(false)
-  }, "\u041E\u0442\u043C\u0435\u043D\u0430")) : null));
+    className: "edit__buttons",
+    onClick: () => {
+      setIsEditNow(false);
+      setMsgText("");
+    }
+  }, "\u041E\u0442\u043C\u0435\u043D\u0430")))));
 };
 
 
